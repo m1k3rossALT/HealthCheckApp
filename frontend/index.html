@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>URL Health Check Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="table-row-wrapper">
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table id="healthTable">
+        <tr>
+          <th>Applications</th>
+          <th>Status</th>
+          <th>Failures</th>
+        </tr>
+        <!-- 6 categories -->
+        <tr data-category="Category 1"><td>Category 1</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
+        <tr data-category="Category 2"><td>Category 2</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
+        <tr data-category="Category 3"><td>Category 3</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
+        <tr data-category="Category 4"><td>Category 4</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
+        <tr data-category="Category 5"><td>Category 5</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
+        <tr data-category="Category 6"><td>Category 6</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
+      </table>
+    </div>
+
+    <!-- Side buttons -->
+    <div class="button-column">
+      <div style="height: 41px;"></div>
+      <button onclick="checkCategory('Category 1')">Check 1</button>
+      <button onclick="checkCategory('Category 2')">Check 2</button>
+      <button onclick="checkCategory('Category 3')">Check 3</button>
+      <button onclick="checkCategory('Category 4')">Check 4</button>
+      <button onclick="checkCategory('Category 5')">Check 5</button>
+      <button onclick="checkCategory('Category 6')">Check 6</button>
+    </div>
+  </div>
+
+  <div class="bottom-button-wrapper">
+    <button onclick="checkAllCategories()">Final Action</button>
+  </div>
+
+  <script src="urls.js"></script>
+</body>
+</html>
