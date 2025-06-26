@@ -92,3 +92,30 @@ td.failures-cell {
   border-radius: 6px;
   cursor: pointer;
 }
+
+.dropdown-toggle {
+  margin-left: 10px;
+  font-size: 12px;
+  padding: 2px 6px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.dropdown-row {
+  display: none;
+  background-color: #f4f4f4;
+}
+
+.dropdown-content {
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.category-cell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
