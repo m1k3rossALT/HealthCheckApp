@@ -1,51 +1,51 @@
-// Map of categories and their URLs
 const urlMap = {
-  "Category 1": [
-    "https://www.google.com",
-    "https://www.github.com"
+  "Authentication": [
+    "https://example.com/auth1",
+    "https://example.com/auth2"
   ],
-  "Category 2": [
-    "https://www.doesnotexist123.com",
-    "https://httpstat.us/500"
+  "Payments": [
+    "https://example.com/pay1",
+    "https://example.com/pay2"
   ],
-  "Category 3": [
-    "https://httpstat.us/200",
-    "https://httpstat.us/403"
+  "User Profile": [
+    "https://example.com/profile1",
+    "https://example.com/profile2"
   ],
-  "Category 4": [
-    "https://www.microsoft.com"
+  "Notifications": [
+    "https://example.com/notify1"
   ],
-  "Category 5": [
-    "https://httpstat.us/404",
-    "https://httpstat.us/503"
+  "Analytics": [
+    "https://example.com/analytics1",
+    "https://example.com/analytics2"
   ],
-  "Category 6": [
-    "https://httpstat.us/200"
+  "Admin Panel": [
+    "https://example.com/admin1",
+    "https://example.com/admin2"
   ]
 };
 
-// Check all URLs in a category
 async function checkCategory(category) {
   const urls = urlMap[category] || [];
-  let failed = [];
+  const failed = [];
 
-  const checks = await Promise.all(urls.map(async (url) => {
-    try {
-      const res = await fetch(url, { method: "GET" });
-      if (!res.ok) failed.push(url);
-    } catch (err) {
-      failed.push(url);
-    }
-  }));
+  await Promise.all(
+    urls.map(async (url) => {
+      try {
+        const res = await fetch(url, { method: "GET" });
+        if (!res.ok) failed.push(url);
+      } catch {
+        failed.push(url);
+      }
+    })
+  );
 
   const row = document.querySelector(`tr[data-category="${category}"]`);
   const statusCell = row.querySelector(".status-cell");
   const failureCell = row.querySelector(".failures-cell");
 
-  // Reset classes
+  // Reset styles
   statusCell.className = "status-cell";
 
-  // Determine status color
   if (failed.length === 0) {
     statusCell.classList.add("status-green");
     statusCell.textContent = "Green";
@@ -59,9 +59,13 @@ async function checkCategory(category) {
     statusCell.textContent = "Red";
     failureCell.textContent = failed.join(", ");
   }
+
+  // Re-align buttons after height changes
+  alignButtons();
 }
 
-// Check all categories at once
 function checkAllCategories() {
-  Object.keys(urlMap).forEach(checkCategory);
+  Object.keys(urlMap).forEach((category) => {
+    checkCategory(category);
+  });
 }

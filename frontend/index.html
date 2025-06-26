@@ -6,42 +6,81 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-  <div class="table-row-wrapper">
-    <!-- Table -->
-    <div class="table-wrapper">
-      <table id="healthTable">
+  <div class="container">
+    <table id="healthTable">
+      <thead>
         <tr>
           <th>Applications</th>
           <th>Status</th>
           <th>Failures</th>
         </tr>
-        <!-- 6 categories -->
-        <tr data-category="Category 1"><td>Category 1</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
-        <tr data-category="Category 2"><td>Category 2</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
-        <tr data-category="Category 3"><td>Category 3</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
-        <tr data-category="Category 4"><td>Category 4</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
-        <tr data-category="Category 5"><td>Category 5</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
-        <tr data-category="Category 6"><td>Category 6</td><td class="status-cell"></td><td class="failures-cell"></td></tr>
-      </table>
-    </div>
+      </thead>
+      <tbody>
+        <tr data-category="Authentication">
+          <td>Authentication</td>
+          <td class="status-cell">-</td>
+          <td class="failures-cell">-</td>
+        </tr>
+        <tr data-category="Payments">
+          <td>Payments</td>
+          <td class="status-cell">-</td>
+          <td class="failures-cell">-</td>
+        </tr>
+        <tr data-category="User Profile">
+          <td>User Profile</td>
+          <td class="status-cell">-</td>
+          <td class="failures-cell">-</td>
+        </tr>
+        <tr data-category="Notifications">
+          <td>Notifications</td>
+          <td class="status-cell">-</td>
+          <td class="failures-cell">-</td>
+        </tr>
+        <tr data-category="Analytics">
+          <td>Analytics</td>
+          <td class="status-cell">-</td>
+          <td class="failures-cell">-</td>
+        </tr>
+        <tr data-category="Admin Panel">
+          <td>Admin Panel</td>
+          <td class="status-cell">-</td>
+          <td class="failures-cell">-</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <!-- Side buttons -->
-    <div class="button-column">
-      <div style="height: 41px;"></div>
-      <button onclick="checkCategory('Category 1')">Check 1</button>
-      <button onclick="checkCategory('Category 2')">Check 2</button>
-      <button onclick="checkCategory('Category 3')">Check 3</button>
-      <button onclick="checkCategory('Category 4')">Check 4</button>
-      <button onclick="checkCategory('Category 5')">Check 5</button>
-      <button onclick="checkCategory('Category 6')">Check 6</button>
+    <div id="buttonColumn" class="button-column">
+      <button onclick="checkCategory('Authentication')">▶</button>
+      <button onclick="checkCategory('Payments')">▶</button>
+      <button onclick="checkCategory('User Profile')">▶</button>
+      <button onclick="checkCategory('Notifications')">▶</button>
+      <button onclick="checkCategory('Analytics')">▶</button>
+      <button onclick="checkCategory('Admin Panel')">▶</button>
     </div>
   </div>
 
-  <div class="bottom-button-wrapper">
-    <button onclick="checkAllCategories()">Final Action</button>
+  <div class="check-all-container">
+    <button onclick="checkAllCategories()">Check All</button>
   </div>
 
   <script src="urls.js"></script>
+  <script>
+    function alignButtons() {
+      const rows = document.querySelectorAll('#healthTable tbody tr');
+      const buttons = document.querySelectorAll('#buttonColumn button');
+
+      rows.forEach((row, index) => {
+        const rowTop = row.offsetTop;
+        const rowHeight = row.offsetHeight;
+        const button = buttons[index];
+        button.style.position = 'absolute';
+        button.style.top = `${rowTop + rowHeight / 2}px`;
+        button.style.transform = 'translateY(-50%)';
+      });
+    }
+
+    window.addEventListener('load', alignButtons);
+    window.addEventListener('resize', alignButtons);
+  </script>
 </body>
 </html>
