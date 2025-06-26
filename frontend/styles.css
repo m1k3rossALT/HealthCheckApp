@@ -5,35 +5,53 @@ body {
 
 .table-row-wrapper {
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
+  gap: 20px; /* spacing between table and buttons */
 }
 
 .table-wrapper {
   display: flex;
   flex-direction: column;
   width: 700px;
+  min-width: 700px; /* fix width to prevent stretching */
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
+  table-layout: fixed; /* prevent layout expansion */
 }
 
 th, td {
   border: 1px solid #ccc;
   padding: 10px;
   text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 th {
   background-color: #f4f4f4;
 }
 
+td.failures-cell {
+  max-width: 280px;
+  white-space: pre-wrap;       /* allow line breaks */
+  word-break: break-word;      /* break long URLs */
+  overflow: auto;
+}
+
+.status-cell {
+  width: 100px;
+  text-align: center;
+}
+
+/* Side Buttons */
 .button-column {
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
+  flex-shrink: 0;
 }
 
 .button-column button {
@@ -42,6 +60,7 @@ th {
   width: 100px;
 }
 
+/* Final Action button */
 .bottom-button-wrapper {
   display: flex;
   justify-content: flex-end;
