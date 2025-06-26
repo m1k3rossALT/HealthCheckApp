@@ -16,7 +16,11 @@ const urlMap = {
   ],
   "Analytics": [
     "https://example.com/analytics1",
-    "https://example.com/analytics2"
+    "https://example.com/analytics2",
+    "https://example.com/notify2",
+    "https://example.com/notify4",
+    "https://example.com/notify3",
+    "https://example.com/notify11"
   ],
   "Admin Panel": [
     "https://example.com/admin1",

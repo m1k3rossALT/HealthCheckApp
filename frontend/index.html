@@ -16,35 +16,77 @@
         </tr>
       </thead>
       <tbody>
+        <!-- Repeat for each category -->
         <tr data-category="Authentication">
-          <td>Authentication</td>
+          <td class="category-cell">
+            <span>Authentication</span>
+            <button class="dropdown-toggle" onclick="toggleDropdown('Authentication')">▼</button>
+          </td>
           <td class="status-cell">-</td>
           <td class="failures-cell">-</td>
         </tr>
+        <tr class="dropdown-row" id="dropdown-Authentication">
+          <td colspan="3" class="dropdown-content"></td>
+        </tr>
+
         <tr data-category="Payments">
-          <td>Payments</td>
+          <td class="category-cell">
+            <span>Payments</span>
+            <button class="dropdown-toggle" onclick="toggleDropdown('Payments')">▼</button>
+          </td>
           <td class="status-cell">-</td>
           <td class="failures-cell">-</td>
         </tr>
+        <tr class="dropdown-row" id="dropdown-Payments">
+          <td colspan="3" class="dropdown-content"></td>
+        </tr>
+
         <tr data-category="User Profile">
-          <td>User Profile</td>
+          <td class="category-cell">
+             <span>User Profile</span>
+            <button class="dropdown-toggle" onclick="toggleDropdown('User Profile')">▼</button>
+          </td>
           <td class="status-cell">-</td>
           <td class="failures-cell">-</td>
         </tr>
+        <tr class="dropdown-row" id="dropdown-User Profile">
+          <td colspan="3" class="dropdown-content"></td>
+        </tr>
+
         <tr data-category="Notifications">
-          <td>Notifications</td>
+          <td class="category-cell">
+            <span>Notifications</span>
+            <button class="dropdown-toggle" onclick="toggleDropdown('Notifications')">▼</button>
+          </td>
           <td class="status-cell">-</td>
           <td class="failures-cell">-</td>
         </tr>
+        <tr class="dropdown-row" id="dropdown-Notifications">
+          <td colspan="3" class="dropdown-content"></td>
+        </tr>
+
         <tr data-category="Analytics">
-          <td>Analytics</td>
+          <td class="category-cell">
+            <span>Analytics</span>
+            <button class="dropdown-toggle" onclick="toggleDropdown('Analytics')">▼</button>
+          </td>
           <td class="status-cell">-</td>
           <td class="failures-cell">-</td>
         </tr>
+        <tr class="dropdown-row" id="dropdown-Analytics">
+          <td colspan="3" class="dropdown-content"></td>
+        </tr>
+
         <tr data-category="Admin Panel">
-          <td>Admin Panel</td>
+          <td class="category-cell">
+            <span>Admin Panel</span>
+            <button class="dropdown-toggle" onclick="toggleDropdown('Admin Panel')">▼</button>
+          </td>
           <td class="status-cell">-</td>
           <td class="failures-cell">-</td>
+        </tr>
+        <tr class="dropdown-row" id="dropdown-Admin Panel">
+          <td colspan="3" class="dropdown-content"></td>
         </tr>
       </tbody>
     </table>
@@ -66,7 +108,7 @@
   <script src="urls.js"></script>
   <script>
     function alignButtons() {
-      const rows = document.querySelectorAll('#healthTable tbody tr');
+      const rows = document.querySelectorAll('#healthTable tbody tr[data-category]');
       const buttons = document.querySelectorAll('#buttonColumn button');
 
       rows.forEach((row, index) => {
@@ -81,6 +123,22 @@
 
     window.addEventListener('load', alignButtons);
     window.addEventListener('resize', alignButtons);
+
+    function toggleDropdown(category) {
+      const row = document.getElementById(`dropdown-${category}`);
+      const contentCell = row.querySelector('.dropdown-content');
+
+      if (row.style.display === 'table-row') {
+        row.style.display = 'none';
+        contentCell.innerHTML = '';
+      } else {
+        row.style.display = 'table-row';
+        const urls = urlMap[category] || [];
+        contentCell.innerHTML = urls.map(u => `<div>${u}</div>`).join('');
+      }
+
+      alignButtons(); // Re-align buttons in case table height changes
+    }
   </script>
 </body>
 </html>
