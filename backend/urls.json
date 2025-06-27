@@ -1,5 +1,5 @@
 {
-  "Category 1": ["https://example.com/one", "https://example.com/two"],
+  "ABC": ["https://example.com/one", "https://example.com/two"],
   "Category 2": ["https://example.org/api", "https://example.org/status"],
   "Category 3": ["https://site.com/health"],
   "Category 4": ["https://alpha.com", "https://beta.com"],

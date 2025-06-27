@@ -21,12 +21,28 @@
     <!-- Rows with Side Buttons -->
     <div class="table-wrapper">
 
+      <!-- Row 0 -->
+      <div class="row-with-button">
+        <table>
+          <tr>
+            <td class="category-cell" data-index="0">
+              ABC
+              <span class="dropdown-toggle">&#9660;</span>
+              <ul class="dropdown-list"></ul>
+            </td>
+            <td class="status-cell" id="status-0">-</td>
+            <td class="failures-cell" id="failures-0"></td>
+          </tr>
+        </table>
+        <button class="side-btn" onclick="checkCategory(0)">1</button>
+      </div>
+
       <!-- Row 1 -->
       <div class="row-with-button">
         <table>
           <tr>
             <td class="category-cell" data-index="1">
-              Category 1
+              Category 2
               <span class="dropdown-toggle">&#9660;</span>
               <ul class="dropdown-list"></ul>
             </td>
@@ -34,7 +50,7 @@
             <td class="failures-cell" id="failures-1"></td>
           </tr>
         </table>
-        <button class="side-btn" onclick="checkCategory(1)">1</button>
+        <button class="side-btn" onclick="checkCategory(1)">2</button>
       </div>
 
       <!-- Row 2 -->
@@ -42,7 +58,7 @@
         <table>
           <tr>
             <td class="category-cell" data-index="2">
-              Category 2
+              Category 3
               <span class="dropdown-toggle">&#9660;</span>
               <ul class="dropdown-list"></ul>
             </td>
@@ -50,7 +66,7 @@
             <td class="failures-cell" id="failures-2"></td>
           </tr>
         </table>
-        <button class="side-btn" onclick="checkCategory(2)">2</button>
+        <button class="side-btn" onclick="checkCategory(2)">3</button>
       </div>
 
       <!-- Row 3 -->
@@ -58,7 +74,7 @@
         <table>
           <tr>
             <td class="category-cell" data-index="3">
-              Category 3
+              Category 4
               <span class="dropdown-toggle">&#9660;</span>
               <ul class="dropdown-list"></ul>
             </td>
@@ -66,7 +82,7 @@
             <td class="failures-cell" id="failures-3"></td>
           </tr>
         </table>
-        <button class="side-btn" onclick="checkCategory(3)">3</button>
+        <button class="side-btn" onclick="checkCategory(3)">4</button>
       </div>
 
       <!-- Row 4 -->
@@ -74,7 +90,7 @@
         <table>
           <tr>
             <td class="category-cell" data-index="4">
-              Category 4
+              Category 5
               <span class="dropdown-toggle">&#9660;</span>
               <ul class="dropdown-list"></ul>
             </td>
@@ -82,7 +98,7 @@
             <td class="failures-cell" id="failures-4"></td>
           </tr>
         </table>
-        <button class="side-btn" onclick="checkCategory(4)">4</button>
+        <button class="side-btn" onclick="checkCategory(4)">5</button>
       </div>
 
       <!-- Row 5 -->
@@ -90,7 +106,7 @@
         <table>
           <tr>
             <td class="category-cell" data-index="5">
-              Category 5
+              Category 6
               <span class="dropdown-toggle">&#9660;</span>
               <ul class="dropdown-list"></ul>
             </td>
@@ -98,23 +114,7 @@
             <td class="failures-cell" id="failures-5"></td>
           </tr>
         </table>
-        <button class="side-btn" onclick="checkCategory(5)">5</button>
-      </div>
-
-      <!-- Row 6 -->
-      <div class="row-with-button">
-        <table>
-          <tr>
-            <td class="category-cell" data-index="6">
-              Category 6
-              <span class="dropdown-toggle">&#9660;</span>
-              <ul class="dropdown-list"></ul>
-            </td>
-            <td class="status-cell" id="status-6">-</td>
-            <td class="failures-cell" id="failures-6"></td>
-          </tr>
-        </table>
-        <button class="side-btn" onclick="checkCategory(6)">6</button>
+        <button class="side-btn" onclick="checkCategory(5)">6</button>
       </div>
 
     </div>

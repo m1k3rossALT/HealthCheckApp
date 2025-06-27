@@ -2,10 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('http://localhost:3000/urls')
     .then(res => res.json())
     .then(data => {
-      for (let i = 1; i <= 6; i++) {
-        const categoryName = `Category ${i}`;
-        const ul = document.querySelector(`.category-cell[data-index="${i}"] .dropdown-list`);
-        const toggle = document.querySelector(`.category-cell[data-index="${i}"] .dropdown-toggle`);
+      const categories = Object.keys(data);
+
+      categories.forEach((categoryName, index) => {
+        const ul = document.querySelector(`.category-cell[data-index="${index}"] .dropdown-list`);
+        const toggle = document.querySelector(`.category-cell[data-index="${index}"] .dropdown-toggle`);
 
         // Populate dropdown list
         if (data[categoryName] && ul) {
@@ -17,17 +18,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Add toggle behavior
-        toggle.addEventListener('click', () => {
-          ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
-        });
-      }
+        if (toggle) {
+          toggle.addEventListener('click', () => {
+            ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
+          });
+        }
+      });
+
+      // Attach category names for checking later
+      window.categoryNames = categories;
     })
-    .catch(err => console.error('Failed to load URLs:', err));
+    .catch(err => console.error('❌ Failed to load URLs:', err));
 });
 
 function checkCategory(index) {
-  const category = `Category ${index}`;
-  console.log(`Checking Category ${category}`);
+  const category = window.categoryNames?.[index];
+  if (!category) {
+    console.warn(`No category found for index ${index}`);
+    return;
+  }
+
+  console.log(`🔎 Checking ${category}`);
 
   fetch(`http://localhost:3000/check?category=${encodeURIComponent(category)}`)
     .then(res => res.json())
@@ -49,14 +60,15 @@ function checkCategory(index) {
       }
     })
     .catch(err => {
-      console.error('Check failed:', err);
+      console.error('❌ Check failed:', err);
       alert('Failed to check category URLs.');
     });
 }
 
 function checkAllCategories() {
-  for (let i = 1; i <= 6; i++) {
+  if (!window.categoryNames) return;
+
+  for (let i = 0; i < window.categoryNames.length; i++) {
     checkCategory(i);
   }
 }
-
