@@ -2,143 +2,129 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>URL Health Check Dashboard</title>
+  <title>Application Health Check</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
   <div class="container">
-    <table id="healthTable">
-      <thead>
-        <tr>
-          <th>Applications</th>
-          <th>Status</th>
-          <th>Failures</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Repeat for each category -->
-        <tr data-category="Authentication">
-          <td class="category-cell">
-            <span>Authentication</span>
-            <button class="dropdown-toggle" onclick="toggleDropdown('Authentication')">▼</button>
-          </td>
-          <td class="status-cell">-</td>
-          <td class="failures-cell">-</td>
-        </tr>
-        <tr class="dropdown-row" id="dropdown-Authentication">
-          <td colspan="3" class="dropdown-content"></td>
-        </tr>
 
-        <tr data-category="Payments">
-          <td class="category-cell">
-            <span>Payments</span>
-            <button class="dropdown-toggle" onclick="toggleDropdown('Payments')">▼</button>
-          </td>
-          <td class="status-cell">-</td>
-          <td class="failures-cell">-</td>
-        </tr>
-        <tr class="dropdown-row" id="dropdown-Payments">
-          <td colspan="3" class="dropdown-content"></td>
-        </tr>
-
-        <tr data-category="User Profile">
-          <td class="category-cell">
-             <span>User Profile</span>
-            <button class="dropdown-toggle" onclick="toggleDropdown('User Profile')">▼</button>
-          </td>
-          <td class="status-cell">-</td>
-          <td class="failures-cell">-</td>
-        </tr>
-        <tr class="dropdown-row" id="dropdown-User Profile">
-          <td colspan="3" class="dropdown-content"></td>
-        </tr>
-
-        <tr data-category="Notifications">
-          <td class="category-cell">
-            <span>Notifications</span>
-            <button class="dropdown-toggle" onclick="toggleDropdown('Notifications')">▼</button>
-          </td>
-          <td class="status-cell">-</td>
-          <td class="failures-cell">-</td>
-        </tr>
-        <tr class="dropdown-row" id="dropdown-Notifications">
-          <td colspan="3" class="dropdown-content"></td>
-        </tr>
-
-        <tr data-category="Analytics">
-          <td class="category-cell">
-            <span>Analytics</span>
-            <button class="dropdown-toggle" onclick="toggleDropdown('Analytics')">▼</button>
-          </td>
-          <td class="status-cell">-</td>
-          <td class="failures-cell">-</td>
-        </tr>
-        <tr class="dropdown-row" id="dropdown-Analytics">
-          <td colspan="3" class="dropdown-content"></td>
-        </tr>
-
-        <tr data-category="Admin Panel">
-          <td class="category-cell">
-            <span>Admin Panel</span>
-            <button class="dropdown-toggle" onclick="toggleDropdown('Admin Panel')">▼</button>
-          </td>
-          <td class="status-cell">-</td>
-          <td class="failures-cell">-</td>
-        </tr>
-        <tr class="dropdown-row" id="dropdown-Admin Panel">
-          <td colspan="3" class="dropdown-content"></td>
-        </tr>
-      </tbody>
+    <!-- Table Header -->
+    <table class="main-table">
+      <tr>
+        <th>Applications</th>
+        <th>Status</th>
+        <th>Failures</th>
+      </tr>
     </table>
 
-    <div id="buttonColumn" class="button-column">
-      <button onclick="checkCategory('Authentication')">▶</button>
-      <button onclick="checkCategory('Payments')">▶</button>
-      <button onclick="checkCategory('User Profile')">▶</button>
-      <button onclick="checkCategory('Notifications')">▶</button>
-      <button onclick="checkCategory('Analytics')">▶</button>
-      <button onclick="checkCategory('Admin Panel')">▶</button>
+    <!-- Rows with Side Buttons -->
+    <div class="table-wrapper">
+
+      <!-- Row 1 -->
+      <div class="row-with-button">
+        <table>
+          <tr>
+            <td class="category-cell" data-index="1">
+              Category 1
+              <span class="dropdown-toggle">&#9660;</span>
+              <ul class="dropdown-list"></ul>
+            </td>
+            <td class="status-cell" id="status-1">-</td>
+            <td class="failures-cell" id="failures-1"></td>
+          </tr>
+        </table>
+        <button class="side-btn" onclick="checkCategory(1)">1</button>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="row-with-button">
+        <table>
+          <tr>
+            <td class="category-cell" data-index="2">
+              Category 2
+              <span class="dropdown-toggle">&#9660;</span>
+              <ul class="dropdown-list"></ul>
+            </td>
+            <td class="status-cell" id="status-2">-</td>
+            <td class="failures-cell" id="failures-2"></td>
+          </tr>
+        </table>
+        <button class="side-btn" onclick="checkCategory(2)">2</button>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="row-with-button">
+        <table>
+          <tr>
+            <td class="category-cell" data-index="3">
+              Category 3
+              <span class="dropdown-toggle">&#9660;</span>
+              <ul class="dropdown-list"></ul>
+            </td>
+            <td class="status-cell" id="status-3">-</td>
+            <td class="failures-cell" id="failures-3"></td>
+          </tr>
+        </table>
+        <button class="side-btn" onclick="checkCategory(3)">3</button>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="row-with-button">
+        <table>
+          <tr>
+            <td class="category-cell" data-index="4">
+              Category 4
+              <span class="dropdown-toggle">&#9660;</span>
+              <ul class="dropdown-list"></ul>
+            </td>
+            <td class="status-cell" id="status-4">-</td>
+            <td class="failures-cell" id="failures-4"></td>
+          </tr>
+        </table>
+        <button class="side-btn" onclick="checkCategory(4)">4</button>
+      </div>
+
+      <!-- Row 5 -->
+      <div class="row-with-button">
+        <table>
+          <tr>
+            <td class="category-cell" data-index="5">
+              Category 5
+              <span class="dropdown-toggle">&#9660;</span>
+              <ul class="dropdown-list"></ul>
+            </td>
+            <td class="status-cell" id="status-5">-</td>
+            <td class="failures-cell" id="failures-5"></td>
+          </tr>
+        </table>
+        <button class="side-btn" onclick="checkCategory(5)">5</button>
+      </div>
+
+      <!-- Row 6 -->
+      <div class="row-with-button">
+        <table>
+          <tr>
+            <td class="category-cell" data-index="6">
+              Category 6
+              <span class="dropdown-toggle">&#9660;</span>
+              <ul class="dropdown-list"></ul>
+            </td>
+            <td class="status-cell" id="status-6">-</td>
+            <td class="failures-cell" id="failures-6"></td>
+          </tr>
+        </table>
+        <button class="side-btn" onclick="checkCategory(6)">6</button>
+      </div>
+
+    </div>
+
+    <!-- Check All Button -->
+    <div class="check-all-container">
+      <button onclick="checkAllCategories()">Check All</button>
     </div>
   </div>
 
-  <div class="check-all-container">
-    <button onclick="checkAllCategories()">Check All</button>
-  </div>
-
-  <script src="urls.js"></script>
-  <script>
-    function alignButtons() {
-      const rows = document.querySelectorAll('#healthTable tbody tr[data-category]');
-      const buttons = document.querySelectorAll('#buttonColumn button');
-
-      rows.forEach((row, index) => {
-        const rowTop = row.offsetTop;
-        const rowHeight = row.offsetHeight;
-        const button = buttons[index];
-        button.style.position = 'absolute';
-        button.style.top = `${rowTop + rowHeight / 2}px`;
-        button.style.transform = 'translateY(-50%)';
-      });
-    }
-
-    window.addEventListener('load', alignButtons);
-    window.addEventListener('resize', alignButtons);
-
-    function toggleDropdown(category) {
-      const row = document.getElementById(`dropdown-${category}`);
-      const contentCell = row.querySelector('.dropdown-content');
-
-      if (row.style.display === 'table-row') {
-        row.style.display = 'none';
-        contentCell.innerHTML = '';
-      } else {
-        row.style.display = 'table-row';
-        const urls = urlMap[category] || [];
-        contentCell.innerHTML = urls.map(u => `<div>${u}</div>`).join('');
-      }
-
-      alignButtons(); // Re-align buttons in case table height changes
-    }
-  </script>
+  <script src="index.js"></script>
 </body>
 </html>
