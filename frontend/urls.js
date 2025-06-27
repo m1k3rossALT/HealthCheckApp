@@ -1,32 +1,4 @@
-const urlMap = {
-  "Authentication": [
-    "https://example.com/auth1",
-    "https://example.com/auth2"
-  ],
-  "Payments": [
-    "https://example.com/pay1",
-    "https://example.com/pay2"
-  ],
-  "User Profile": [
-    "https://example.com/profile1",
-    "https://example.com/profile2"
-  ],
-  "Notifications": [
-    "https://example.com/notify1"
-  ],
-  "Analytics": [
-    "https://example.com/analytics1",
-    "https://example.com/analytics2",
-    "https://example.com/notify2",
-    "https://example.com/notify4",
-    "https://example.com/notify3",
-    "https://example.com/notify11"
-  ],
-  "Admin Panel": [
-    "https://example.com/admin1",
-    "https://example.com/admin2"
-  ]
-};
+// No more hardcoded urlMap — now loaded dynamically
 
 async function checkCategory(category) {
   const urls = urlMap[category] || [];

@@ -12,6 +12,7 @@ body {
 table {
   border-collapse: collapse;
   width: 800px;
+  table-layout: fixed; /* 🔐 Ensure equal layout handling */
   background: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -21,6 +22,27 @@ th, td {
   padding: 16px;
   text-align: left;
   vertical-align: middle;
+  word-wrap: break-word;
+}
+
+/* Fixed widths for each column */
+th:first-child,
+td:first-child {
+  width: 200px; /* Category */
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 120px; /* Status */
+  text-align: center;
+}
+
+th:last-child,
+td:last-child {
+  width: 480px; /* Failures */
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 th {
@@ -45,26 +67,19 @@ th {
   background-color: #f44336;
 }
 
-td.failures-cell {
-  max-width: 280px;
-  white-space: pre-wrap;       /* allow line breaks */
-  word-break: break-word;      /* break long URLs */
-  overflow: auto;
-}
-
-.status-cell {
-  width: 100px;
-  text-align: center;
+.failures-cell {
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 /* Side Buttons */
 .button-column {
   position: absolute;
+  top: 64px; /* Align with first data row (skip header) */
   left: 820px;
-  top: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px; /* matches row height for spacing */
 }
 
 .button-column button {
@@ -93,29 +108,73 @@ td.failures-cell {
   cursor: pointer;
 }
 
+/* Dropdown Styles */
+.category-cell {
+  position: relative;
+}
+
 .dropdown-toggle {
-  margin-left: 10px;
-  font-size: 12px;
-  padding: 2px 6px;
-  border: none;
-  border-radius: 4px;
-  background-color: #ccc;
+  float: right;
   cursor: pointer;
+  font-weight: bold;
+  padding-left: 10px;
 }
 
-.dropdown-row {
+.dropdown-list {
   display: none;
-  background-color: #f4f4f4;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  list-style: none;
+  padding: 10px;
+  margin: 5px 0 0 0;
+  border: 1px solid #ccc;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-.dropdown-content {
-  padding: 10px;
+.dropdown-list li {
   font-size: 14px;
   line-height: 1.5;
+  margin-bottom: 5px;
 }
 
-.category-cell {
+.dropdown-list.show {
+  display: block;
+}
+
+.table-wrapper {
+  position: relative;
+}
+
+.row-with-button {
+  position: relative;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  margin-bottom: 4px;
+}
+
+.row-with-button table {
+  width: 800px;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.side-btn {
+  position: absolute;
+  right: -60px;
+  width: 40px;
+  height: 40px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transform: translateY(-50%);
+  top: 50%;
 }
