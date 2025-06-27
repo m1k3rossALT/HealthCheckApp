@@ -1,30 +1,28 @@
 const urlMap = {
-  "Authentication": [
-    "https://example.com/auth1",
-    "https://example.com/auth2"
+  "ICMRM": [
+    "https://icmrm.cardinalhealth.net/icmrm/admin/jsf/login.jsp",
+    "https://cmecmpharma1.cardinalhealth.net:9443/icmrm/admin/jsf/login.jsp"
   ],
-  "Payments": [
-    "https://example.com/pay1",
-    "https://example.com/pay2"
+  "MEDICMRM": [
+    "https://medicmrm.cardinalhealth.net/icmrm/admin/jsf/login.jsp",
+    "https://cmecmpharma1.cardinalhealth.net:9443/icmrm/admin/jsf/login.jsp"
   ],
-  "User Profile": [
-    "https://example.com/profile1",
-    "https://example.com/profile2"
+  "ICN - Navigator": [
+    "https://contentmanager.cardinalhealth.net/navigator/",
+    "https://lpec5009cmnpa01.cardinalhealth.net:9444/navigator/"
   ],
-  "Notifications": [
-    "https://example.com/notify1"
+  "ICN - CMIS": [
+    "https://ecmapp.appzone.dmz/navigator",
+    "https://CMECMCMIS1.appzone.dmz/navigator"
   ],
-  "Analytics": [
-    "https://example.com/analytics1",
-    "https://example.com/analytics2",
-    "https://example.com/notify2",
-    "https://example.com/notify4",
-    "https://example.com/notify3",
-    "https://example.com/notify11"
+  "ICN - Desktops": [
+    "https://contentmanager.cardinalhealth.net/navigator/?desktop=CCA",
+    "https://contentmanager.cardinalhealth.net/navigator/?desktop=ICCSAP",
+    "https://contentmanager.cardinalhealth.net/navigator/?desktop=Presource"
   ],
-  "Admin Panel": [
-    "https://example.com/admin1",
-    "https://example.com/admin2"
+  "Other URLs": [
+    "https://ecmimagews.cardinalhealth.net/ECMContentService/ECMContentSummaryService_v2_1",
+    "https://ecmwebclient.cardinalhealth.net/ECMWebClient/"
   ]
 };
 
