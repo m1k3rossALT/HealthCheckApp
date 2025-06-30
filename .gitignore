@@ -1,0 +1,31 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Environment files
+.env
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VSCode settings
+.vscode/
+
+# Build files
+dist/
+build/
+
+# OS junk
+*.swp
+*.swo
+
+# Cache
+.cache/
+npm-debug.log*
+
+# Zip files
+*.zip
