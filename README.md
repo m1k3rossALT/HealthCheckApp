@@ -2,7 +2,6 @@
 
 A simple web-based health monitoring tool to check the status of URLs and their login accessibility.
 
-
 ## 🔧 Features
 
 - ✅ Categorized URL monitoring
@@ -11,7 +10,6 @@ A simple web-based health monitoring tool to check the status of URLs and their 
 - ✅ Dropdowns to view URLs per category
 - ✅ Backend with Express + Axios for SSL-bypassed checks
 
-
 ## 🚀 How to Run
 
 ### Frontend
@@ -19,11 +17,15 @@ A simple web-based health monitoring tool to check the status of URLs and their 
 ```bash
 Open index.html in your browser
 
-### Backend
+
+Backend (Node.js)
+bash
+Copy
+Edit
 cd backend
 npm install
 node server.js
-
+Make sure your urls.json is placed inside backend/ and properly formatted.
 
 🧪 Tech Stack
 HTML/CSS/JavaScript
@@ -33,7 +35,6 @@ Node.js
 Express
 
 Axios
-
 
 📁 Project Structure
 pgsql
