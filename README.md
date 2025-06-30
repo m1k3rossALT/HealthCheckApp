@@ -54,3 +54,9 @@ HealthCheckApp/
 │
 ├── .gitignore
 └── README.md
+
+## 📊 API Flow Diagram
+
+This diagram shows how the frontend interacts with backend APIs:
+
+![API Flow](./docs/api-flow-diagram.png)
