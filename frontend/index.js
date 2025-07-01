@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('http://localhost:3000/urls')
+  const API_HEADERS = {
+  'x-api-key': 'secretkey123'  // 🔐 Replace with your real key
+  };
+
+  fetch('http://localhost:3000/urls', {
+    headers: API_HEADERS
+  })
     .then(res => res.json())
     .then(data => {
       const categories = Object.keys(data);
@@ -42,7 +48,14 @@ function checkCategory(index) {
   statusCell.style.backgroundColor = '#ffc107';
   failuresCell.textContent = '';
 
-  fetch(`http://localhost:3000/check-full?category=${encodeURIComponent(category)}`)
+  const API_HEADERS = {
+  'x-api-key': 'secretkey123'  // 🔐 Replace with your real key
+  };
+  
+  fetch(`http://localhost:3000/check-full?category=${encodeURIComponent(category)}`, {
+    headers: API_HEADERS
+    }
+  )
     .then(res => res.json())
     .then(data => {
       const allUrls = window.urlData?.[category]?.urls || [];

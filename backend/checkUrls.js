@@ -43,6 +43,7 @@ async function checkUrls(urls) {
 }
 
 async function checkLogin(categoryData) {
+  
   const loginConfig = categoryData.login;
 
   if (!loginConfig || !categoryData.urls) {
@@ -58,7 +59,7 @@ async function checkLogin(categoryData) {
 
   const username = process.env[env_username_key];
   const password = process.env[env_password_key];
-
+  console.log('USERNAME:', username, 'PASSWORD:', password);
   if (!username || !password) {
     return {
       success: false,
