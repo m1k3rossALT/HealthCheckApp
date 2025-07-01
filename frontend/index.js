@@ -4,13 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
       const categories = Object.keys(data);
 
+      window.categoryNames = categories;
+      window.urlData = data; // Save full URL config for health mapping
+
       categories.forEach((categoryName, index) => {
         const ul = document.querySelector(`.category-cell[data-index="${index}"] .dropdown-list`);
         const toggle = document.querySelector(`.category-cell[data-index="${index}"] .dropdown-toggle`);
 
-        // Populate dropdown list
         if (data[categoryName] && ul) {
-          const urls = data[categoryName].urls || data[categoryName]; // fallback for old format
+          const urls = data[categoryName].urls || data[categoryName];
           urls.forEach(url => {
             const li = document.createElement('li');
             li.textContent = url;
@@ -18,62 +20,69 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
 
-        // Add toggle behavior
         if (toggle) {
           toggle.addEventListener('click', () => {
             ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
           });
         }
       });
-
-      // Attach category names for checking later
-      window.categoryNames = categories;
     })
     .catch(err => console.error('❌ Failed to load URLs:', err));
 });
 
 function checkCategory(index) {
   const category = window.categoryNames?.[index];
-  if (!category) {
-    console.warn(`No category found for index ${index}`);
-    return;
-  }
+  if (!category) return;
 
   const statusCell = document.getElementById(`status-${index}`);
   const failuresCell = document.getElementById(`failures-${index}`);
 
   statusCell.className = 'status-cell';
   statusCell.textContent = 'Checking...';
-  statusCell.style.backgroundColor = '#ffc107'; // orange
+  statusCell.style.backgroundColor = '#ffc107';
   failuresCell.textContent = '';
 
-  // Step 1: Health Check
-  fetch(`http://localhost:3000/check?category=${encodeURIComponent(category)}`)
+  fetch(`http://localhost:3000/check-full?category=${encodeURIComponent(category)}`)
     .then(res => res.json())
-    .then(healthData => {
-      if (healthData.status === 'green') {
-        // Step 2: Login Check
-        statusCell.textContent = 'Health ✅, checking login...';
-        return fetch(`http://localhost:3000/check-login?category=${encodeURIComponent(category)}`)
-          .then(res => res.json())
-          .then(loginData => {
-            if (loginData.success) {
-              statusCell.textContent = '✅ All OK (Health + Login)';
-              statusCell.classList.add('status-green');
-            } else {
-              statusCell.textContent = 'Login ❌';
-              statusCell.classList.add('status-red');
-              failuresCell.textContent = loginData.reason || 'Login check failed';
-            }
-          });
-      } else {
-        // Health failed
-        statusCell.textContent = `Health ❌`;
-        statusCell.classList.add('status-red');
+    .then(data => {
+      const allUrls = window.urlData?.[category]?.urls || [];
+      const failedUrls = Array.isArray(data.failed) ? data.failed : [];
 
-        if (Array.isArray(healthData.failed) && healthData.failed.length > 0) {
-          failuresCell.textContent = healthData.failed.join('\n');
+      const loginResultsMap = new Map(
+        (data.login?.results || []).map(r => [r.url.replace(/\/login$/, ''), r])
+      );
+
+      const mergedOutput = allUrls.map((url) => {
+        const isUp = !failedUrls.includes(url);
+        const loginInfo = loginResultsMap.get(url);
+
+        if (!isUp) {
+          return `❌ ${url} (URL Down)`;
         }
+
+        if (loginInfo?.success === true) {
+          return `✅ ${url} (Login Passed)`;
+        } else {
+          return `❌ ${url} (Login Failed)`;
+        }
+      });
+
+      failuresCell.textContent = mergedOutput.join('\n');
+
+      // Set overall category status in Column 2
+      const total = allUrls.length;
+      const urlFailures = failedUrls.length;
+      const loginFailures = (data.login?.results || []).filter(r => r.success === false).length;
+
+      if (urlFailures === total) {
+        statusCell.textContent = 'Health ❌';
+        statusCell.classList.add('status-red');
+      } else if (urlFailures > 0 || loginFailures > 0) {
+        statusCell.textContent = 'Partial ❌';
+        statusCell.classList.add('status-orange');
+      } else {
+        statusCell.textContent = '✅ All OK';
+        statusCell.classList.add('status-green');
       }
     })
     .catch(err => {
