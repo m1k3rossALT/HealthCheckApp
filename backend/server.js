@@ -1,58 +1,66 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
-const axios = require('axios');
-const https = require('https');
+const { checkUrls, checkLogin } = require('./checkUrls');
+const urlsData = require('./urls.json');
+require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
+app.use(express.json());
 
-// Serve urls.json
-app.get('/urls', (req, res) => {
-  fs.readFile('./urls.json', 'utf8', (err, data) => {
-    if (err) {
-      return res.status(500).json({ error: 'Failed to read URLs' });
-    }
-    res.setHeader('Content-Type', 'application/json');
-    res.send(data);
-  });
+// Optional: Secure the API with a token
+app.use((req, res, next) => {
+  const apiKey = process.env.API_KEY;
+  const clientKey = req.headers['x-api-key'];
+
+  if (apiKey && clientKey !== apiKey) {
+    return res.status(401).json({ error: 'Unauthorized: Invalid API key' });
+  }
+
+  next();
 });
 
-// Health check logic
+// Serve full URL list
+app.get('/urls', (req, res) => {
+  res.json(urlsData);
+});
+
+// Health check for a category
 app.get('/check', async (req, res) => {
   const category = req.query.category;
+  const categoryData = urlsData[category];
 
-  fs.readFile('./urls.json', 'utf8', async (err, data) => {
-    if (err) {
-      return res.status(500).json({ error: 'Failed to read URLs' });
-    }
+  if (!categoryData || !categoryData.urls) {
+    return res.status(400).json({ error: 'Invalid category or missing URLs' });
+  }
 
-    const urls = JSON.parse(data)[category];
-    if (!urls || urls.length === 0) {
-      return res.json({ status: 'green', failed: [] });
-    }
+  try {
+    const result = await checkUrls(categoryData.urls);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: 'Health check failed', details: err.message });
+  }
+});
 
-    const failed = [];
-    const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+// Login check for a category
+app.get('/check-login', async (req, res) => {
+  const category = req.query.category;
+  const categoryData = urlsData[category];
 
-    await Promise.all(urls.map(async (url) => {
-      try {
-        await axios.get(url, { httpsAgent, timeout: 5000 });
-      } catch (e) {
-        failed.push(url);
-      }
-    }));
+  if (!categoryData || !categoryData.login) {
+    return res.status(400).json({ error: 'Invalid category or no login config' });
+  }
 
-    let status = 'green';
-    if (failed.length === urls.length) status = 'red';
-    else if (failed.length > 0) status = 'orange';
-
-    res.json({ status, failed });
-  });
+  try {
+    const result = await checkLogin(categoryData);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: 'Login check failed', details: err.message });
+  }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
 });

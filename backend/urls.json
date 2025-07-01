@@ -1,8 +1,84 @@
 {
-  "ABC": ["https://example.com/one", "https://example.com/two"],
-  "Category 2": ["https://example.org/api", "https://example.org/status"],
-  "Category 3": ["https://site.com/health"],
-  "Category 4": ["https://alpha.com", "https://beta.com"],
-  "Category 5": ["https://gamma.com"],
-  "Category 6": ["https://zeta.com/check"]
+"AdminPanel": {
+  "urls": [
+    "https://internal.example.com/admin",
+    "https://internal.example.com/dashboard",
+    "https://internal.example.com/settings"
+  ],
+  "login": {
+    "method": "POST",
+    "env_username_key": "LOGIN_CREDENTIALS_ADMINPANEL_USERNAME",
+    "env_password_key": "LOGIN_CREDENTIALS_ADMINPANEL_PASSWORD",
+    "successCriteria": {
+      "status": 200,
+      "responseIncludes": "Dashboard"
+    }
+  }
+},
+  "FinanceTool": {
+    "urls": [
+      "https://internal.example.com/finance",
+      "https://internal.example.com/reports"
+    ],
+    "login": {
+      "method": "POST",
+      "env_username_key": "LOGIN_CREDENTIALS_FINANCETOOL_USERNAME",
+      "env_password_key": "LOGIN_CREDENTIALS_FINANCETOOL_PASSWORD",
+      "successCriteria": {
+        "status": 200,
+        "responseIncludes": "Welcome to Finance"
+      }
+    }
+  },
+  "DevOpsPortal": {
+    "urls": [
+      "https://devops.internal.example.com",
+      "https://devops.internal.example.com/deployments"
+    ],
+    "login": {
+      "method": "POST",
+      "env_username_key": "LOGIN_CREDENTIALS_DEVOPSPORTAL_USERNAME",
+      "env_password_key": "LOGIN_CREDENTIALS_DEVOPSPORTAL_PASSWORD",
+      "successCriteria": {
+        "status": 200,
+        "responseIncludes": "Deploy Dashboard"
+      }
+    }
+  },
+  "HRSystem": {
+    "urls": [
+      "https://hr.example.com/employee",
+      "https://hr.example.com/leaves"
+    ],
+    "login": {
+      "method": "POST",
+      "env_username_key": "LOGIN_CREDENTIALS_HRSYSTEM_USERNAME",
+      "env_password_key": "LOGIN_CREDENTIALS_HRSYSTEM_PASSWORD",
+      "successCriteria": {
+        "status": 200,
+        "responseIncludes": "HR Portal"
+      }
+    }
+  },
+  "CustomerPortal": {
+    "urls": [
+      "https://portal.example.com/home",
+      "https://portal.example.com/support"
+    ],
+    "login": {
+      "method": "POST",
+      "env_username_key": "LOGIN_CREDENTIALS_CUSTOMERPORTAL_USERNAME",
+      "env_password_key": "LOGIN_CREDENTIALS_CUSTOMERPORTAL_PASSWORD",
+      "successCriteria": {
+        "status": 200,
+        "responseIncludes": "Customer Dashboard"
+      }
+    }
+  },
+  "DocumentationSite": {
+    "urls": [
+      "https://docs.internal.example.com",
+      "https://docs.internal.example.com/api"
+    ]
+  }
 }
