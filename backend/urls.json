@@ -32,7 +32,7 @@
   },
   "DevOpsPortal": {
     "urls": [
-      "https://devops.internal.example.com",
+      "https://google.com",
       "https://devops.internal.example.com/deployments"
     ],
     "login": {
