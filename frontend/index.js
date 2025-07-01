@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Populate dropdown list
         if (data[categoryName] && ul) {
-          data[categoryName].forEach(url => {
+          const urls = data[categoryName].urls || data[categoryName]; // fallback for old format
+          urls.forEach(url => {
             const li = document.createElement('li');
             li.textContent = url;
             ul.appendChild(li);
@@ -38,30 +39,48 @@ function checkCategory(index) {
     return;
   }
 
-  console.log(`🔎 Checking ${category}`);
+  const statusCell = document.getElementById(`status-${index}`);
+  const failuresCell = document.getElementById(`failures-${index}`);
 
+  statusCell.className = 'status-cell';
+  statusCell.textContent = 'Checking...';
+  statusCell.style.backgroundColor = '#ffc107'; // orange
+  failuresCell.textContent = '';
+
+  // Step 1: Health Check
   fetch(`http://localhost:3000/check?category=${encodeURIComponent(category)}`)
     .then(res => res.json())
-    .then(data => {
-      const statusCell = document.getElementById(`status-${index}`);
-      const failuresCell = document.getElementById(`failures-${index}`);
+    .then(healthData => {
+      if (healthData.status === 'green') {
+        // Step 2: Login Check
+        statusCell.textContent = 'Health ✅, checking login...';
+        return fetch(`http://localhost:3000/check-login?category=${encodeURIComponent(category)}`)
+          .then(res => res.json())
+          .then(loginData => {
+            if (loginData.success) {
+              statusCell.textContent = '✅ All OK (Health + Login)';
+              statusCell.classList.add('status-green');
+            } else {
+              statusCell.textContent = 'Login ❌';
+              statusCell.classList.add('status-red');
+              failuresCell.textContent = loginData.reason || 'Login check failed';
+            }
+          });
+      } else {
+        // Health failed
+        statusCell.textContent = `Health ❌`;
+        statusCell.classList.add('status-red');
 
-      statusCell.className = 'status-cell';
-      failuresCell.textContent = '';
-
-      if (data.status === 'green') statusCell.classList.add('status-green');
-      else if (data.status === 'orange') statusCell.classList.add('status-orange');
-      else if (data.status === 'red') statusCell.classList.add('status-red');
-
-      statusCell.textContent = data.status.toUpperCase();
-
-      if (data.failed.length > 0) {
-        failuresCell.textContent = data.failed.join('\n');
+        if (Array.isArray(healthData.failed) && healthData.failed.length > 0) {
+          failuresCell.textContent = healthData.failed.join('\n');
+        }
       }
     })
     .catch(err => {
       console.error('❌ Check failed:', err);
-      alert('Failed to check category URLs.');
+      statusCell.textContent = 'Error ❌';
+      statusCell.classList.add('status-red');
+      failuresCell.textContent = 'Error while checking.';
     });
 }
 
