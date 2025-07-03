@@ -1,127 +1,109 @@
 const axios = require('axios');
 const https = require('https');
+const fs = require('fs');
+const path = require('path');
+require('dotenv').config();
 
 const agent = new https.Agent({ rejectUnauthorized: false });
 
-async function checkUrls(urls) {
-  const results = [];
+const urlsFilePath = path.join(__dirname, 'urls.json');
+const urlsData = JSON.parse(fs.readFileSync(urlsFilePath));
 
-  for (const url of urls) {
-    try {
-      const start = Date.now();
-
-      const response = await axios.get(url, {
-        timeout: 8000,
-        httpsAgent: agent,
-        validateStatus: () => true
-      });
-
-      results.push({
-        url,
-        status: response.status,
-        isHealthy: response.status >= 200 && response.status < 400,
-        responseTimeMs: Date.now() - start
-      });
-
-    } catch (error) {
-      results.push({
-        url,
-        status: null,
-        isHealthy: false,
-        error: error.message
-      });
-    }
-  }
+async function checkUrls(categoryUrls) {
+  const results = await Promise.all(
+    categoryUrls.map(async (url) => {
+      try {
+        const response = await axios.get(url, { httpsAgent: agent, timeout: 5000 });
+        return { url, status: response.status, isHealthy: true };
+      } catch (error) {
+        return {
+          url,
+          status: error.response?.status || null,
+          isHealthy: false,
+          error: error.message
+        };
+      }
+    })
+  );
 
   const failed = results.filter(r => !r.isHealthy).map(r => r.url);
-
-  let status = 'green';
-  if (failed.length > 0 && failed.length < urls.length) status = 'orange';
-  if (failed.length === urls.length) status = 'red';
-
-  return { status, failed };
+  return { results, failed };
 }
 
 async function checkLogin(categoryData) {
-  
-  const loginConfig = categoryData.login;
-
-  if (!loginConfig || !categoryData.urls) {
-    return { success: false, reason: 'No login config or urls[] found.' };
+  if (!categoryData.login || !Array.isArray(categoryData.urls)) {
+    return { results: [], failed: [] };
   }
 
   const {
-    method = 'POST',
-    env_username_key,
-    env_password_key,
-    successCriteria
-  } = loginConfig;
+    login: {
+      url: loginUrl,
+      method = 'POST',
+      env_username_key,
+      env_password_key,
+      successCriteria = {}
+    }
+  } = categoryData;
 
   const username = process.env[env_username_key];
   const password = process.env[env_password_key];
-  console.log('USERNAME:', username, 'PASSWORD:', password);
-  if (!username || !password) {
-    return {
-      success: false,
-      reason: `Missing env keys: ${env_username_key}, ${env_password_key}`
-    };
-  }
+
+  const targets = categoryData.urls;
 
   const results = [];
 
-  const healthyUrls = categoryData.urls;
-
-  for (const baseUrl of healthyUrls) {
-    const loginUrl = `${baseUrl}/login`;
-  // After the for-loop that logs results for healthy URLs
-  const originalUrls = categoryData._originalUrls || categoryData.urls;
-  const skippedUrls = originalUrls.filter(url => !categoryData.urls.includes(url));
-
-  for (const skipped of skippedUrls) {
-    results.push({
-      url: `${skipped}/login`,
-      success: null,
-      reason: 'Skipped due to failed health check'
-    });
-  }
-
+  for (const target of targets) {
     try {
       const response = await axios({
         method,
         url: loginUrl,
         data: { username, password },
         httpsAgent: agent,
-        timeout: 8000,
-        validateStatus: () => true
+        timeout: 5000
       });
 
-      const statusMatch = response.status === successCriteria.status;
-      const bodyMatch = typeof response.data === 'string' &&
-        response.data.includes(successCriteria.responseIncludes);
+      const validStatuses = successCriteria.statuses || [successCriteria.status];
+      const statusMatch = validStatuses.includes(response.status);
 
-      results.push({
-        url: loginUrl,
+      const bodyMatch =
+        response.status === 204
+          ? true
+          : successCriteria.responseIncludes
+            ? response.data &&
+              response.data.toString().toLowerCase().includes(successCriteria.responseIncludes.toLowerCase())
+            : true;
+
+      const isSuccess = statusMatch && bodyMatch;
+
+      // Debug log
+      console.log(`[LOGIN DEBUG]`, {
+        url: target,
+        loginUrl,
         status: response.status,
-        success: statusMatch && bodyMatch,
-        reason: statusMatch && bodyMatch
-          ? 'Login success'
-          : `Login failed: statusMatch=${statusMatch}, bodyMatch=${bodyMatch}`
+        expectedStatuses: validStatuses,
+        expectedText: successCriteria.responseIncludes,
+        statusMatch,
+        bodyMatch,
+        isSuccess
       });
 
-    } catch (err) {
       results.push({
-        url: loginUrl,
+        url: target,
+        success: isSuccess,
+        reason: isSuccess ? null : 'Login failed'
+      });
+    } catch (error) {
+      console.warn(`[LOGIN ERROR] ${target} →`, error.message);
+      results.push({
+        url: target,
         success: false,
-        reason: `Login error: ${err.message}`
+        reason: error.message
       });
     }
   }
 
-  const overallSuccess = results.every(r => r.success);
-  return { success: overallSuccess, results };
+  const failed = results.filter(r => !r.success).map(r => r.url);
+  return { results, failed };
 }
 
-module.exports = {
-  checkUrls,
-  checkLogin
-};
+module.exports = { checkUrls, checkLogin };
