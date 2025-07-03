@@ -10,7 +10,7 @@
     "env_username_key": "LOGIN_CREDENTIALS_ADMINPANEL_USERNAME",
     "env_password_key": "LOGIN_CREDENTIALS_ADMINPANEL_PASSWORD",
     "successCriteria": {
-      "status": 200,
+      "status": [200, 204],
       "responseIncludes": "Dashboard"
     }
   }
@@ -25,7 +25,7 @@
       "env_username_key": "LOGIN_CREDENTIALS_FINANCETOOL_USERNAME",
       "env_password_key": "LOGIN_CREDENTIALS_FINANCETOOL_PASSWORD",
       "successCriteria": {
-        "status": 200,
+        "status": [200, 204],
         "responseIncludes": "Welcome to Finance"
       }
     }
@@ -40,7 +40,7 @@
       "env_username_key": "LOGIN_CREDENTIALS_DEVOPSPORTAL_USERNAME",
       "env_password_key": "LOGIN_CREDENTIALS_DEVOPSPORTAL_PASSWORD",
       "successCriteria": {
-        "status": 200,
+        "status": [200, 204],
         "responseIncludes": "Deploy Dashboard"
       }
     }
@@ -55,7 +55,7 @@
       "env_username_key": "LOGIN_CREDENTIALS_HRSYSTEM_USERNAME",
       "env_password_key": "LOGIN_CREDENTIALS_HRSYSTEM_PASSWORD",
       "successCriteria": {
-        "status": 200,
+        "status": [200, 204],
         "responseIncludes": "HR Portal"
       }
     }
@@ -70,7 +70,7 @@
       "env_username_key": "LOGIN_CREDENTIALS_CUSTOMERPORTAL_USERNAME",
       "env_password_key": "LOGIN_CREDENTIALS_CUSTOMERPORTAL_PASSWORD",
       "successCriteria": {
-        "status": 200,
+        "status": [200, 204],
         "responseIncludes": "Customer Dashboard"
       }
     }
