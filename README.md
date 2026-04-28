@@ -1,62 +1,50 @@
 # HealthCheckApp
 
-A simple web-based health monitoring tool to check the status of URLs and their login accessibility.
+A production-grade URL health monitoring tool with login verification, built on Node.js + Express (backend) and React + Vite (frontend).
 
-## 🔧 Features
 
-- ✅ Categorized URL monitoring
-- ✅ Status indication (Green/Orange/Red)
-- ✅ Failures listed per category
-- ✅ Dropdowns to view URLs per category
-- ✅ Backend with Express + Axios for SSL-bypassed checks
-
-## 🚀 How to Run
-
-### Frontend
+## Quick start (Docker)
 
 ```bash
-Open index.html in your browser
+cp .env.example .env        # fill in your values
+docker compose up --build
+```
 
+Frontend → http://localhost:5173  
+Backend API → http://localhost:3000
 
-Backend (Node.js)
-bash
-Copy
-Edit
-cd backend
-npm install
-node server.js
-Make sure your urls.json is placed inside backend/ and properly formatted.
+## Quick start (local)
 
-🧪 Tech Stack
-HTML/CSS/JavaScript
+```bash
+# Backend
+cd backend && cp .env.example .env && npm install && npm run dev
 
-Node.js
+# Frontend (new terminal)
+cd frontend && cp .env.example .env && npm install && npm run dev
+```
 
-Express
+## Configuration
 
-Axios
+All monitored URLs and login configs live in `backend/urls.json`.  
+See `backend/urls.json` for the full schema and an example entry.  
+All secrets (credentials, API keys) go in `backend/.env` — never in `urls.json`.
 
-📁 Project Structure
-pgsql
-Copy
-Edit
-HealthCheckApp/
-│
-├── backend/
-│   ├── server.js
-│   ├── checkUrls.js
-│   └── urls.json
-│
-├── frontend/
-│   ├── index.html
-│   ├── styles.css
-│   ├── index.js
-│
-├── .gitignore
-└── README.md
+## Environment variables
 
-## 📊 API Flow Diagram
+See `backend/.env.example` and `frontend/.env.example` for all required variables.
 
-This diagram shows how the frontend interacts with backend APIs:
+## Adding a new category
 
-![API Flow](./docs/api-flow-diagram.png)
+1. Add an entry to `backend/urls.json` following the existing schema.
+2. Add the corresponding credential env vars to `backend/.env`.
+3. Restart the backend (or it hot-reloads in dev).
+
+## API
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | /health | Liveness probe |
+| GET | /ready | Readiness probe |
+| GET | /api/v1/categories | List all categories |
+| GET | /api/v1/check/:category | Full check for one category |
+| GET | /api/v1/check-all | Full check for all categories |

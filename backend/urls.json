@@ -1,81 +1,98 @@
 {
-"AdminPanel": {
-  "urls": [
-    "https://internal.example.com/admin",
-    "https://internal.example.com/dashboard",
-    "https://internal.example.com/settings"
-  ],
-  "login": {
-    "method": "POST",
-    "env_username_key": "LOGIN_CREDENTIALS_ADMINPANEL_USERNAME",
-    "env_password_key": "LOGIN_CREDENTIALS_ADMINPANEL_PASSWORD",
-    "successCriteria": {
-      "status": [200, 204],
-      "responseIncludes": "Dashboard"
+  "AdminPanel": {
+    "enabled": true,
+    "timeout": 5000,
+    "urls": [
+      "https://internal.example.com/admin",
+      "https://internal.example.com/dashboard",
+      "https://internal.example.com/settings"
+    ],
+    "login": {
+      "url": "https://internal.example.com/api/auth/login",
+      "method": "POST",
+      "env_username_key": "LOGIN_CREDENTIALS_ADMINPANEL_USERNAME",
+      "env_password_key": "LOGIN_CREDENTIALS_ADMINPANEL_PASSWORD",
+      "successCriteria": {
+        "statuses": [200, 204],
+        "responseIncludes": "Dashboard"
+      }
     }
-  }
-},
+  },
   "FinanceTool": {
+    "enabled": true,
+    "timeout": 5000,
     "urls": [
       "https://internal.example.com/finance",
       "https://internal.example.com/reports"
     ],
     "login": {
+      "url": "https://internal.example.com/finance/api/auth/login",
       "method": "POST",
       "env_username_key": "LOGIN_CREDENTIALS_FINANCETOOL_USERNAME",
       "env_password_key": "LOGIN_CREDENTIALS_FINANCETOOL_PASSWORD",
       "successCriteria": {
-        "status": [200, 204],
+        "statuses": [200, 204],
         "responseIncludes": "Welcome to Finance"
       }
     }
   },
   "DevOpsPortal": {
+    "enabled": true,
+    "timeout": 8000,
     "urls": [
-      "https://google.com",
+      "https://devops.internal.example.com",
       "https://devops.internal.example.com/deployments"
     ],
     "login": {
+      "url": "https://devops.internal.example.com/api/auth/login",
       "method": "POST",
       "env_username_key": "LOGIN_CREDENTIALS_DEVOPSPORTAL_USERNAME",
       "env_password_key": "LOGIN_CREDENTIALS_DEVOPSPORTAL_PASSWORD",
       "successCriteria": {
-        "status": [200, 204],
+        "statuses": [200, 204],
         "responseIncludes": "Deploy Dashboard"
       }
     }
   },
   "HRSystem": {
+    "enabled": true,
+    "timeout": 5000,
     "urls": [
       "https://hr.example.com/employee",
       "https://hr.example.com/leaves"
     ],
     "login": {
+      "url": "https://hr.example.com/api/auth/login",
       "method": "POST",
       "env_username_key": "LOGIN_CREDENTIALS_HRSYSTEM_USERNAME",
       "env_password_key": "LOGIN_CREDENTIALS_HRSYSTEM_PASSWORD",
       "successCriteria": {
-        "status": [200, 204],
+        "statuses": [200, 204],
         "responseIncludes": "HR Portal"
       }
     }
   },
   "CustomerPortal": {
+    "enabled": true,
+    "timeout": 5000,
     "urls": [
       "https://portal.example.com/home",
       "https://portal.example.com/support"
     ],
     "login": {
+      "url": "https://portal.example.com/api/auth/login",
       "method": "POST",
       "env_username_key": "LOGIN_CREDENTIALS_CUSTOMERPORTAL_USERNAME",
       "env_password_key": "LOGIN_CREDENTIALS_CUSTOMERPORTAL_PASSWORD",
       "successCriteria": {
-        "status": [200, 204],
+        "statuses": [200, 204],
         "responseIncludes": "Customer Dashboard"
       }
     }
   },
   "DocumentationSite": {
+    "enabled": true,
+    "timeout": 5000,
     "urls": [
       "https://docs.internal.example.com",
       "https://docs.internal.example.com/api"

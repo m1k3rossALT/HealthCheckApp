@@ -1,31 +1,31 @@
-# Node modules
+# Dependencies
 node_modules/
+
+# Environment files — never commit secrets
+.env
+.env.local
+.env.production
+
+# Build output
+dist/
+build/
 
 # Logs
 logs/
 *.log
-
-# Environment files
-.env
-
-# System files
-.DS_Store
-Thumbs.db
-
-# VSCode settings
-.vscode/
-
-# Build files
-dist/
-build/
-
-# OS junk
-*.swp
-*.swo
-
-# Cache
-.cache/
 npm-debug.log*
 
-# Zip files
-*.zip
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Docker
+*.env.docker
+
+# Test coverage
+coverage/
+
+# Vite cache
+.vite/
