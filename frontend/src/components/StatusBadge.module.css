@@ -1,0 +1,25 @@
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.green   { background: var(--color-green-bg);  color: var(--color-green-text);  }
+.orange  { background: var(--color-orange-bg); color: var(--color-orange-text); }
+.red     { background: var(--color-red-bg);    color: var(--color-red-text);    }
+.gray    { background: var(--color-gray-bg);   color: var(--color-gray-text);   }
+.idle    { background: var(--color-gray-bg);   color: var(--color-text-muted);  }
+
+.loading {
+  background: var(--color-blue-bg);
+  color: var(--color-blue-text);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
